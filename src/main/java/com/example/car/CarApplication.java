@@ -2,6 +2,7 @@ package com.example.car;
 
 import com.example.car.Entity.Car;
 import com.example.car.Entity.Owner;
+import com.example.car.Entity.User;
 import com.example.car.Repository.CarRepository;
 import com.example.car.Repository.OwnerRepository;
 import com.example.car.Repository.UserRepository;
@@ -54,6 +55,9 @@ public class CarApplication implements CommandLineRunner{
 		for(Owner owner : ownerRepository.findAll()){
 			logger.info(owner.getFirstName() + " " + owner.getLastName());
 		}
+
+		userRepository.save(new User("user", "$2y$04$UyfVFnO2ZsiriEYgvQtV/eCj.rer9Kcf4E9nen5zpbCIPDpSCSFWa", "USER"));
+		userRepository.save(new User("admin","$2y$04$qkXadKe.SOuiZQgheqSSZOqVoAzOxCKc3jhPpHXgPV1x6rEx827hW","ADMIN"));
 	}
 
 //	@Override
