@@ -4,10 +4,15 @@ import com.example.car.Entity.Car;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.PagingAndSortingRepository;
+import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 
 import java.util.List;
 
-public interface CarRepository extends CrudRepository<Car, Long>, PagingAndSortingRepository<Car, Long> {
+//@RepositoryRestResource(path="vehicles")
+@RepositoryRestResource
+public interface CarRepository extends CrudRepository<Car, Long> {
+
+    //, PagingAndSortingRepository<Car, Long>
 
     //브랜드로 자동차를 검색
     List<Car> findByBrand(String brand);
@@ -28,8 +33,8 @@ public interface CarRepository extends CrudRepository<Car, Long>, PagingAndSorti
     List<Car> findByBrandOrderByYearAsc(String brand);
 
     //SQL 문을 이용해 브랜드로 자동차를 검색
-    //@Query("select c from Car c where c.brand = ?1")
-    //List<Car> findByBrand(String brand);
+//    @Query("select c from Car c where c.brand = ?1")
+//    List<Car> findByBrand(String brand);
 
     //SQL 문을 이용해 브랜드로 자동차를 검색2
     @Query("select c from Car c where c.brand like %?1")

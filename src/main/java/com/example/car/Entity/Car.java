@@ -1,9 +1,10 @@
 package com.example.car.Entity;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
-@Table(name = "Car")
 public class Car {
 
     @Id
@@ -27,7 +28,19 @@ public class Car {
 
     public Car(){}
 
-    public Car(String brand, String model, String color, String registerNumber, int year, int price, Owner owner){
+//    public Car(String brand, String model, String color, String registerNumber, int year, int price, Owner owner){
+//
+//        super();
+//        this.brand = brand;
+//        this.model = model;
+//        this.color = color;
+//        this.registerNumber = registerNumber;
+//        this.year = year;
+//        this.price = price;
+//        this.owner = owner;
+//    }
+
+    public Car(String brand, String model, String color, String registerNumber, int year, int price, String description){
 
         super();
         this.brand = brand;
@@ -36,7 +49,7 @@ public class Car {
         this.registerNumber = registerNumber;
         this.year = year;
         this.price = price;
-        this.owner = owner;
+        this.description = description;
     }
 
 
@@ -115,4 +128,15 @@ public class Car {
     public void setOwner(Owner owner){
         this.owner = owner;
     }
+
+//    @ManyToMany(mappedBy = "cars")
+//    private Set<Owner> owners = new HashSet<Owner>();
+//
+//    public Set<Owner> getOwners(){
+//        return owners;
+//    }
+//
+//    public void setOwners(Set<Owner> owners){
+//        this.owners = owners;
+//    }
 }
