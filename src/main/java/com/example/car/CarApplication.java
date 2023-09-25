@@ -51,25 +51,13 @@ public class CarApplication implements CommandLineRunner{
 		ownerRepository.save(new Owner("lee", "b"));
 		ownerRepository.save(new Owner("park", "c"));
 
-		//등록된 모든 자동차의 정보를 콘솔에 로깅
+		//등록된 모든 오너의 정보를 콘솔에 로깅
 		for(Owner owner : ownerRepository.findAll()){
 			logger.info(owner.getFirstName() + " " + owner.getLastName());
 		}
 
-		userRepository.save(new User("user", "$2y$04$UyfVFnO2ZsiriEYgvQtV/eCj.rer9Kcf4E9nen5zpbCIPDpSCSFWa", "USER"));
-		userRepository.save(new User("admin","$2y$04$qkXadKe.SOuiZQgheqSSZOqVoAzOxCKc3jhPpHXgPV1x6rEx827hW","ADMIN"));
+//		userRepository.save(new User("user", "$2y$04$UyfVFnO2ZsiriEYgvQtV/eCj.rer9Kcf4E9nen5zpbCIPDpSCSFWa", "USER"));
+//		userRepository.save(new User("admin","$2y$04$qkXadKe.SOuiZQgheqSSZOqVoAzOxCKc3jhPpHXgPV1x6rEx827hW","ADMIN"));
 	}
-
-//	@Override
-//	public void run(String... args) throws Exception {
-//		ownerRepository.save(new Owner("kim", "a"));
-//		ownerRepository.save(new Owner("lee", "b"));
-//		ownerRepository.save(new Owner("park", "c"));
-//
-//		//등록된 모든 자동차의 정보를 콘솔에 로깅
-//		for(Owner owner : ownerRepository.findAll()){
-//			logger.info(owner.getFirstName() + " " + owner.getLastName());
-//		}
-//	}
 
 }
