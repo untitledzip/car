@@ -3,6 +3,7 @@ import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
+import Button from '@mui/material/Button';
 
 function AddCar(props){
 
@@ -39,9 +40,12 @@ function AddCar(props){
 
     return(
         <div>
-            <button onClick={handleClickOpen}> New Car </button>
+            <Button variant="contained"
+                onClick={handleClickOpen}>
+                New Car
+            </Button>
             <Dialog open={open} onClose={handleClose}>
-                <DialogTitle> New Car </DialogTitle>
+                <DialogTitle>New Car</DialogTitle>
                 <DialogContent>
                     <input placeholder="Brand" name="brand" value={car.brand} onChange={handleChange}/>
                     <br />

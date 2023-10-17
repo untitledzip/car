@@ -1,9 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import { SERVER_URL } from '../constants.js';
-import { DataGrid } from '@mui/x-data-grid';
+import { DataGrid, GridToolbarContainer, GridToolbarExport, gridClasses } from '@mui/x-data-grid';
 import { Snackbar } from '@material-ui/core';
 import AddCar from './AddCar.js';
 import EditCar from './EditCar.js';
+import Stack from '@mui/material/Stack';
+import IconButton from '@mui/material/IconButton';
+import DeleteIcon from '@mui/icons-material/Delete';
+
+//데이터를 CSV로 내보내는 기능
+//import{ GridToolbarContainer, GridToolbarExport, gridClasses } from '@mui/x-data-grid';
 
 /*
     @mui/x-data-grid
@@ -133,14 +139,18 @@ function CarList(){
     }
 
     return(
+
         <React.Fragment>
-            <AddCar addCar={addCar} />
+            <Stack mt={2} mb={2}>
+                <AddCar addCar={addCar} />
+            </Stack>
             <div style = {{ height: 500, width: '100%' }}>
                 <DataGrid
                     rows={cars}
                     columns={columns}
                     disableSelectionOnClick={true} //true로 설정하면 동작을 비활성화 할 수 있음
-                    getRowId={row => row._links.self.href}/>
+                    getRowId={row => row._links.self.href}
+                    components={{ Toolbar: CustomToolbar }}/>
             </div>
         </React.Fragment>
     );
@@ -161,5 +171,13 @@ function CarList(){
 //                </tbody>
 //            </table>
 
+function CustomToolbar(){
+    return(
+        <GridToolbarContainer
+            className={gridClasses.toolbarContainer}>
+            <GridToolbarExport />
+        </GridToolbarContainer>
+    )
+}
 
 export default CarList;
