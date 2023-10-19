@@ -8,9 +8,6 @@ import Stack from '@mui/material/Stack';
 import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
 
-//데이터를 CSV로 내보내는 기능
-//import{ GridToolbarContainer, GridToolbarExport, gridClasses } from '@mui/x-data-grid';
-
 /*
     @mui/x-data-grid
      - 데이터 표 컴포넌트를 이용하면 표에 필요한 모든 기능(ex. 정렬, 필터링, 페이지 매김)을 아주 적은 코드로 구현할 수 있음
@@ -19,13 +16,25 @@ import DeleteIcon from '@mui/icons-material/Delete';
      - 셀에 더 복잡한 내용을 넣어야 할 때 사용함, 셀의 내용이 렌더링되는 방법을 정의함
 
     Snackbar 컴포넌트
-    삭제 결과를 보여주는 알림 메시지 구현
+     - 삭제 결과를 보여주는 알림 메시지 구현
+
+    데이터를 CSV로 내보내는 기능
+     - import{ GridToolbarContainer, GridToolbarExport, gridClasses } from '@mui/x-data-grid
+
+    MUI에는 미리 제작된 SVG 아이콘이 있음
+     - @mui/icons-material
 */
 
 function CarList(){
 
-    const fetchCars = () => {
-        fetch(SERVER_URL + 'api/cars')
+        const fetchCars = () => {
+
+        //세션 저장소에서 토큰을 읽고 Authorization 헤더에 이를 포함
+        const token = sessionStorage.getItem("jwt");
+
+        fetch(SERVER_URL + 'api/cars', {
+            headers: {'Authorization': token}
+        })
         .then(response => response.json)
         .then(data => setCars(data._embedded.cars))
         .catch(err => console.error(err));
@@ -55,10 +64,9 @@ function CarList(){
             sortable: false,
             filterable: false,
             renderCell: row =>
-                <button
-                    onClick={() => onDelClick(row.id)}>
-                    Delete
-                </button>
+                <IconButton onClick={() => onDelClick(row.id)}>
+                    <DeleteIcon color="error" />
+                </IconButton>
         }
     ];
 
@@ -82,7 +90,10 @@ function CarList(){
     //삭제 기능
     const onDelClick = (url) => {
         if(window.confirm("Are you sure to delete?")){
-            fetch(url, {method: 'DELETE'})
+            const token = sessionStorage.getItem("jwt");
+            fetch(url, {method: 'DELETE',
+                        headers: {'Authorization':token}
+            })
             .then(response => {
                 if(response.ok){
                     fetchCars();
@@ -104,10 +115,13 @@ function CarList(){
 
     //자동차 추가
     const addCar = (car) =>{
+        const token = sessionStorage.getItem("jwt")
         fetch(SERVER_URL + 'api/cars',
             {
                 method: 'POST',
-                headers: {'Content-Type':'application/json'},
+                headers: {'Content-Type':'application/json',
+                            'Authorization':token
+                },
                 body: JSON.stringify(car)
             })
         .then(response => {
@@ -122,10 +136,13 @@ function CarList(){
 
     //자동차 업데이트
     const updateCar = (car, link) => {
+        const token = sessionStorage.getItem("jwt")
         fetch(link,
             {
                 method: 'PUT',
-                headers: {'Content-Type':'application/json'},
+                headers: {'Content-Type':'application/json',
+                            'Authorization':token
+                         },
                 body: JSON.stringify(car)
             })
         .then(response => {
